@@ -1,50 +1,34 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import classNames from "classnames";
-
-const product = {
-  _id: "1",
-  title: "T-shirt",
-  variation: [
-    {
-      color: "red",
-      image:
-        "https://png.pngtree.com/element_our/png/20180828/yellow-t-shirt-mockup-png_72954.jpg",
-    },
-    {
-      color: "blue",
-      image:
-        "https://seanese.com/cdn/shop/products/mockup-084fa717_2048x.jpg?v=1500319426",
-    },
-    {
-      color: "green",
-      image:
-        "https://png.pngtree.com/element_our/png/20180828/yellow-t-shirt-mockup-png_72954.jpg",
-    },
-  ],
-  price: 520,
-  size: [{ sizeName: "xs" }, { sizeName: "lg" }, { sizeName: "m" }],
-};
+import { useGetSingleProductsQuery } from "../../redux/features/product/productApi";
+import MyImage from "../../components/shared/Image/Image";
 
 const Details = () => {
   const { id } = useParams();
+  const { data, isLoading } = useGetSingleProductsQuery(id);
 
   const [currentImage, setcurrentImage] = useState({
-    image: product.variation[0].image,
-    color: product.variation[0].color,
+    image: data?.payload?.variation[0]?.image || "",
+    color: data?.payload?.variation[0]?.color || "",
   });
-  const [currentSize, setCurrentSize] = useState(product.size[0].sizeName);
+  const [currentSize, setCurrentSize] = useState(
+    data?.payload?.size[0].sizeName
+  );
   const [quantity, setQuantity] = useState(1);
+  if (isLoading) return <div>loading..</div>;
 
   // handel image and color active
   const handelActiveImage = (color) => {
-    const selectedColor = product.variation.find((item) => item.color == color);
+    const selectedColor = data?.payload?.variation?.find(
+      (item) => item.color == color
+    );
     setcurrentImage({
-      ...currentImage,
-      color: selectedColor.color,
       image: selectedColor.image,
+      color: selectedColor.color,
     });
   };
+
   // handel active size
   const handelSizeActive = (size) => {
     setCurrentSize(size);
@@ -64,31 +48,31 @@ const Details = () => {
   return (
     <div className="max-w-6xl mx-auto h-screen lg:flex mt-40 justify-between">
       <div className="lg:w-1/2">
-        <img src={currentImage.image} alt="image" />
+        <MyImage image={currentImage} />
       </div>
       <div className="lg:w-1/2">
         <h1 className="text-color-black-1 text-3xl font-semibold">
-          {product.title}
+          {data?.payload?.title}
         </h1>
         <h5 className="text-xl text-color-black-1 font-medium mt-4">
-          ${product.price}
+          ${data?.payload?.price}
         </h5>
 
         <h6 className="uppercase text-base text-gray-700 mt-3">
-          COLOR : {currentImage.color}
+          COLOR : {currentImage?.color}
         </h6>
         {/* color */}
         <div className="w-full flex-none text-sm flex items-center text-gray-600 mt-5">
           <ul className="flex flex-row justify-center items-center space-x-2">
-            {product.variation.map((variaint, i) => (
+            {data?.payload?.variation?.map((v, i) => (
               <li
                 className="cursor-pointer"
                 key={i}
-                onClick={() => handelActiveImage(variaint.color)}
+                onClick={() => handelActiveImage(v.color)}
               >
                 <span className="block p-1 border-2 border-gray-900 hover:border-blue-600 rounded-full transition ease-in duration-300">
                   <span
-                    style={{ background: `${variaint.color}` }}
+                    style={{ background: `${v.color}` }}
                     className="block w-3 h-3 rounded-full"
                   ></span>
                 </span>
@@ -102,7 +86,7 @@ const Details = () => {
             Size
           </span>
           <div className="cursor-pointer text-gray-400 flex items-center space-x-2 justify-center">
-            {product.size.map((s, i) => (
+            {data?.payload?.size.map((s, i) => (
               <span
                 key={i}
                 onClick={() => handelSizeActive(s.sizeName)}

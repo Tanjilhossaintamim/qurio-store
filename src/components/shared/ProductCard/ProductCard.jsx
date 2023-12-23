@@ -10,7 +10,6 @@ const ProductCard = ({ product }) => {
     image,
     color,
   });
-  console.log(activeImage);
 
   const handelActiveImage = (color) => {
     const selectedColor = variation.find((item) => item.color == color);
@@ -32,7 +31,7 @@ const ProductCard = ({ product }) => {
                   <img
                     src={activeImage.image}
                     alt="Just a flower"
-                    className=" w-full   object-fill  "
+                    className=" w-full h-72  object-fill  "
                   />
                 </div>
                 <div className="flex-auto justify-evenly">
