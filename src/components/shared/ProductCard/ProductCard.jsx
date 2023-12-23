@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
-  const { title, price, variation, size } = product;
+  const { title, price, variation, size, _id } = product;
 
   const { image, color } = variation[0];
 
@@ -87,7 +87,7 @@ const ProductCard = ({ product }) => {
                     <button className="transition ease-in duration-300 inline-flex items-center text-sm font-medium mb-2 md:mb-0 bg-teal-500 px-5 py-2 hover:shadow-lg tracking-wider text-white rounded-full hover:bg-teal-600 ">
                       <span>Add Cart</span>
                     </button>
-                    <Link to={"/details"}>
+                    <Link to={`/product/${_id}`}>
                       <button className="transition ease-in duration-300 bg-gray-700 hover:bg-gray-800 border hover:border-gray-500 border-gray-700 hover:text-white  hover:shadow-lg text-gray-400 rounded-full w-9 h-9 text-center p-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
