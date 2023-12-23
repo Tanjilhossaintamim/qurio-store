@@ -7,12 +7,13 @@ import {
   IconButton,
   Badge,
 } from "@material-tailwind/react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import logo from "../../../assets/navlogo.png";
 
 export default function MyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -94,10 +95,12 @@ export default function MyNavbar() {
                   <MdOutlineShoppingBag className="text-3xl" />
                 </span>
               </Badge>
+
               <Button
                 variant="gradient"
                 size="sm"
                 className="hidden lg:inline-block"
+                onClick={() => navigate("/login")}
               >
                 <span>Sign in</span>
               </Button>
@@ -150,7 +153,13 @@ export default function MyNavbar() {
                 <MdOutlineShoppingBag className="text-3xl" />
               </span>
             </Badge>
-            <Button variant="gradient" size="sm" fullWidth className="ml-4">
+            <Button
+              variant="gradient"
+              size="sm"
+              fullWidth
+              className="ml-4"
+              onClick={() => navigate("/login")}
+            >
               <span>Sign in</span>
             </Button>
           </div>
