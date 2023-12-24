@@ -8,11 +8,13 @@ import VerifyLogin from "../pages/VerifyLogin/VerifyLogin";
 import PublicRoute from "./PublicRoute";
 import Cart from "../pages/Cart/Cart";
 import PrivateRoute from "./PrivateRoute";
+import Error from "../pages/Error/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
