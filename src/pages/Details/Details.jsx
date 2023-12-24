@@ -91,7 +91,7 @@ const Details = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto h-screen lg:flex mt-40 justify-between">
+    <div className="max-w-6xl mx-auto h-screen lg:flex mt-40 justify-between px-4 lg:px-0">
       <Helmet>
         <title>Qrio || Details</title>
       </Helmet>
@@ -149,17 +149,17 @@ const Details = () => {
           </div>
         </div>
         {/* // add to cart btn */}
-        <div className="border border-gray-800 w-36 flex items-center text-color-black-1">
-          <button className="w-12" onClick={handelDecreaseQuantity}>
+        <div className="border border-gray-800 w-36 h-10 flex items-center text-color-black-1 relative overflow-hidden">
+          <button className="w-12 border-none" onClick={handelDecreaseQuantity}>
             -
           </button>
           <input
             type="text"
-            className="w-12 border-l border-r border-gray-800 outline-none text-center"
+            className="w-12 h-full border-l border-r border-gray-800 outline-none text-center"
             readOnly
             value={quantity}
           />
-          <button className="w-12" onClick={handelIncreaseQuantity}>
+          <button className="w-12 border-none" onClick={handelIncreaseQuantity}>
             +
           </button>
         </div>
