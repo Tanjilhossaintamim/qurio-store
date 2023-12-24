@@ -1,19 +1,23 @@
 import React from "react";
 import {
   Navbar,
-  MobileNav,
   Typography,
   Button,
   IconButton,
   Badge,
+  Collapse,
 } from "@material-tailwind/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import logo from "../../../assets/navlogo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../../../redux/features/auth/authSlice";
 
 export default function MyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
   const navigate = useNavigate();
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -79,6 +83,10 @@ export default function MyNavbar() {
     </ul>
   );
 
+  const handelLogout = () => {
+    dispatch(removeUser());
+  };
+
   return (
     <div className="sticky top-0 z-50">
       <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
@@ -95,15 +103,25 @@ export default function MyNavbar() {
                   <MdOutlineShoppingBag className="text-3xl" />
                 </span>
               </Badge>
-
-              <Button
-                variant="gradient"
-                size="sm"
-                className="hidden lg:inline-block"
-                onClick={() => navigate("/login")}
-              >
-                <span>Sign in</span>
-              </Button>
+              {!isLoggedIn ? (
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                  onClick={() => navigate("/login")}
+                >
+                  <span>Sign in</span>
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  size="sm"
+                  className="hidden lg:inline-block border-2 text-teal-500 border-teal-500"
+                  onClick={handelLogout}
+                >
+                  <span>Logout</span>
+                </Button>
+              )}
             </div>
             <IconButton
               variant="text"
@@ -144,7 +162,7 @@ export default function MyNavbar() {
             </IconButton>
           </div>
         </div>
-        <MobileNav open={openNav}>
+        <Collapse open={openNav}>
           {navList}
           <div className="flex items-center hover:text-teal-500 text-base font-medium text-color-black-1 gap-x-1">
             {/* // cart button */}
@@ -153,17 +171,29 @@ export default function MyNavbar() {
                 <MdOutlineShoppingBag className="text-3xl" />
               </span>
             </Badge>
-            <Button
-              variant="gradient"
-              size="sm"
-              fullWidth
-              className="ml-4"
-              onClick={() => navigate("/login")}
-            >
-              <span>Sign in</span>
-            </Button>
+            {!isLoggedIn ? (
+              <Button
+                variant="gradient"
+                size="sm"
+                fullWidth
+                className="ml-4"
+                onClick={() => navigate("/login")}
+              >
+                <span>Sign in</span>
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                size="sm"
+                fullWidth
+                className="ml-4 text-teal-500 border-2 border-teal-600"
+                onClick={handelLogout}
+              >
+                <span>Logout</span>
+              </Button>
+            )}
           </div>
-        </MobileNav>
+        </Collapse>
       </Navbar>
     </div>
   );
