@@ -1,22 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import classNames from "classnames";
 import { useGetSingleProductsQuery } from "../../redux/features/product/productApi";
 import MyImage from "../../components/shared/Image/Image";
+import { useSelector } from "react-redux";
+import DetailsSkeleton from "../../components/shared/detailsSkeleton/DetailsSkeleton";
 
 const Details = () => {
   const { id } = useParams();
-  const { data, isLoading } = useGetSingleProductsQuery(id);
+  const { data, isLoading, isSuccess } = useGetSingleProductsQuery(id);
+  const { image, color } = useSelector((state) => state.product);
 
   const [currentImage, setcurrentImage] = useState({
-    image: data?.payload?.variation[0]?.image || "",
-    color: data?.payload?.variation[0]?.color || "",
+    image: data?.payload?.variation[0]?.image || image,
+    color: data?.payload?.variation[0]?.color || color,
   });
   const [currentSize, setCurrentSize] = useState(
-    data?.payload?.size[0].sizeName
+    data?.payload?.size[0].sizeName || "xs"
   );
   const [quantity, setQuantity] = useState(1);
-  if (isLoading) return <div>loading..</div>;
 
   // handel image and color active
   const handelActiveImage = (color) => {
@@ -44,6 +46,23 @@ const Details = () => {
       setQuantity(quantity - 1);
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setcurrentImage({
+        image: data?.payload?.variation[0]?.image,
+        color: data?.payload?.variation[0]?.color,
+      });
+    }
+  }, [isSuccess, data]);
+
+  if (isLoading) {
+    return (
+      <div className="h-[60vh] flex items-center justify-center">
+        <DetailsSkeleton />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto h-screen lg:flex mt-40 justify-between">

@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setImageAndColor } from "../../../redux/features/product/productSlice";
 
 const ProductCard = ({ product }) => {
   const { title, price, variation, size, _id } = product;
+  const dispatch = useDispatch();
 
   const { image, color } = variation[0];
 
@@ -18,6 +21,9 @@ const ProductCard = ({ product }) => {
       color: selectedColor.color,
       image: selectedColor.image,
     });
+  };
+  const handelSetImage = () => {
+    dispatch(setImageAndColor({ image, color }));
   };
 
   return (
@@ -87,7 +93,10 @@ const ProductCard = ({ product }) => {
                       <span>Add Cart</span>
                     </button>
                     <Link to={`/product/${_id}`}>
-                      <button className="transition ease-in duration-300 bg-gray-700 hover:bg-gray-800 border hover:border-gray-500 border-gray-700 hover:text-white  hover:shadow-lg text-gray-400 rounded-full w-9 h-9 text-center p-2">
+                      <button
+                        onClick={handelSetImage}
+                        className="transition ease-in duration-300 bg-gray-700 hover:bg-gray-800 border hover:border-gray-500 border-gray-700 hover:text-white  hover:shadow-lg text-gray-400 rounded-full w-9 h-9 text-center p-2"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className=""
