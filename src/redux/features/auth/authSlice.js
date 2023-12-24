@@ -1,29 +1,20 @@
-import api from "../api/api";
+import { createSlice } from "@reduxjs/toolkit";
 
-const productApi = api.injectEndpoints({
-  endpoints: (builder) => ({
-    register: builder.mutation({
-      query: (data) => ({
-        url: "/api/register",
-        method: "POST",
-        body: data,
-      }),
-    }),
-    login: builder.mutation({
-      query: (data) => ({
-        url: "/api/register",
-        method: "POST",
-        body: data,
-      }),
-    }),
-    verify: builder.mutation({
-      query: (data) => ({
-        url: "/api/register",
-        method: "POST",
-        body: data,
-      }),
-    }),
-  }),
+const initialState = {
+  isLoggedIn: false,
+  user: {},
+};
+
+const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    setUser: (state, action) => {
+      console.log(action.payload);
+      state.isLoggedIn = true;
+      state.user = action.payload;
+    },
+  },
 });
-export const { useRegisterMutation, useLoginMutation, useVerifyMutation } =
-  productApi;
+export const { setUser } = authSlice.actions;
+export default authSlice.reducer;

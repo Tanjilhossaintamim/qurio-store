@@ -11,9 +11,12 @@ import {
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 //   import Lottie from "react-lottie";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { useEffect } from "react";
 
 export default function LogIn() {
+  const [login, { isSuccess, isError, error, isLoading }] = useLoginMutation();
   const {
     register,
     handleSubmit,
@@ -24,9 +27,23 @@ export default function LogIn() {
   //   const { state } = useLocation();
 
   const handleLogin = (data) => {
-    // console.log(data);
+    const userInfo = {
+      email: data.email,
+      password: data.password,
+    };
+    login(userInfo);
+    console.log(userInfo);
   };
-
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.data.message);
+    }
+    if (isSuccess) {
+      toast.success("login successfully !");
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isError, isSuccess, navigate]);
   return (
     <div className="flex justify-evenly flex-col-reverse md:flex-row-reverse py-16">
       <Card className="md:w-96">
@@ -75,8 +92,13 @@ export default function LogIn() {
           </CardBody>
           <CardFooter className="pt-0">
             <Button color="green" type="submit" variant="gradient" fullWidth>
-              {/* {false ? <div className="flex justify-center"><Spinner /></div> : 'Sign In'} */}
-              Sign In
+              {isLoading ? (
+                <div className="flex justify-center">
+                  <Spinner />
+                </div>
+              ) : (
+                "Sign In"
+              )}
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
               Don&apos;t have an account?
@@ -94,9 +116,6 @@ export default function LogIn() {
           </CardFooter>
         </form>
       </Card>
-      {/* <div>
-            <Lottie options={{ animationData: Illustration }} width={350} />
-          </div> */}
     </div>
   );
 }
