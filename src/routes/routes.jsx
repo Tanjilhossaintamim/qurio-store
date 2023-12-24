@@ -4,6 +4,7 @@ import Layout from "../layout/Layout";
 import Details from "../pages/Details/Details";
 import LogIn from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import VerifyLogin from "../pages/VerifyLogin/VerifyLogin";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+  {
+    path: "/verify/:token",
+    element: <VerifyLogin />,
   },
 ]);
 

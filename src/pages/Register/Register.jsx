@@ -11,21 +11,45 @@ import {
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 //   import Lottie from "react-lottie";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useSingupMutation } from "../../redux/features/auth/authApi";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export default function Register() {
+  const [signup, { data, isLoading, isError, error, isSuccess }] =
+    useSingupMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const navigate = useNavigate();
   //   const { state } = useLocation();
 
   const handleLogin = (data) => {
-    // console.log(data);
+    const userInfo = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      password: data.password,
+    };
+    signup(userInfo);
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.data.message);
+      console.log(error);
+    }
+    if (isSuccess) {
+      Swal.fire({
+        title: "Success",
+        text: "we send a verification link to your email please check !",
+        icon: "success"
+      });
+    }
+  }, [data, isError, isSuccess, error]);
 
   return (
     <div className="flex justify-evenly flex-col-reverse md:flex-row-reverse py-16">
@@ -107,8 +131,13 @@ export default function Register() {
           </CardBody>
           <CardFooter className="pt-0">
             <Button color="green" type="submit" variant="gradient" fullWidth>
-              {/* {false ? <div className="flex justify-center"><Spinner /></div> : 'Sign In'} */}
-              Sign Up
+              {isLoading ? (
+                <div className="flex justify-center">
+                  <Spinner />
+                </div>
+              ) : (
+                "Sign Up"
+              )}
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
               Don&apos;t have an account?

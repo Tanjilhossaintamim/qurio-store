@@ -2,7 +2,7 @@ import api from "../api/api";
 
 const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation({
+    singup: builder.mutation({
       query: (data) => ({
         url: "/api/register",
         method: "POST",
@@ -11,19 +11,19 @@ const authApi = api.injectEndpoints({
     }),
     login: builder.mutation({
       query: (data) => ({
-        url: "/api/register",
+        url: "/api/login",
         method: "POST",
         body: data,
       }),
     }),
     verify: builder.mutation({
       query: (data) => ({
-        url: "/api/register",
+        url: "/api/verify",
         method: "POST",
         body: data,
       }),
     }),
   }),
 });
-export const { useRegisterMutation, useLoginMutation, useVerifyMutation } =
+export const { useSingupMutation, useLoginMutation, useVerifyMutation } =
   authApi;
