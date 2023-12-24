@@ -5,6 +5,7 @@ import { useGetSingleProductsQuery } from "../../redux/features/product/productA
 import MyImage from "../../components/shared/Image/Image";
 import { useSelector } from "react-redux";
 import DetailsSkeleton from "../../components/shared/detailsSkeleton/DetailsSkeleton";
+import { Helmet } from "react-helmet-async";
 
 const Details = () => {
   const { id } = useParams();
@@ -66,6 +67,9 @@ const Details = () => {
 
   return (
     <div className="max-w-6xl mx-auto h-screen lg:flex mt-40 justify-between">
+      <Helmet>
+        <title>Qrio || Details</title>
+      </Helmet>
       <div className="lg:w-1/2">
         <MyImage image={currentImage} />
       </div>

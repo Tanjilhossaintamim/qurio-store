@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 export default function LogIn() {
   const [login, { isSuccess, isError, error, isLoading }] = useLoginMutation();
@@ -46,6 +47,9 @@ export default function LogIn() {
   }, [isError, isSuccess, navigate]);
   return (
     <div className="flex justify-evenly flex-col-reverse md:flex-row-reverse py-16">
+      <Helmet>
+        <title>Qrio || Login</title>
+      </Helmet>
       <Card className="md:w-96">
         <CardHeader
           shadow={false}

@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useVerifyMutation } from "../../redux/features/auth/authApi";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const VerifyLogin = () => {
   const { token } = useParams();
@@ -23,6 +24,9 @@ const VerifyLogin = () => {
   }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <Helmet>
+        <title>Qrio || Verify</title>
+      </Helmet>
       <div className="max-w-md p-8 bg-white shadow-md rounded-md">
         <h2 className="text-3xl font-semibold mb-6 text-center">
           Account Verification

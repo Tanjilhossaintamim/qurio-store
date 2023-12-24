@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useSingupMutation } from "../../redux/features/auth/authApi";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 export default function Register() {
   const [signup, { data, isLoading, isError, error, isSuccess }] =
@@ -46,13 +47,16 @@ export default function Register() {
       Swal.fire({
         title: "Success",
         text: "we send a verification link to your email please check !",
-        icon: "success"
+        icon: "success",
       });
     }
   }, [data, isError, isSuccess, error]);
 
   return (
     <div className="flex justify-evenly flex-col-reverse md:flex-row-reverse py-16">
+      <Helmet>
+        <title>Qrio || Register</title>
+      </Helmet>
       <Card className="md:w-96">
         <CardHeader
           shadow={false}
