@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setImageAndColor } from "../../../redux/features/product/productSlice";
+import { useAddToCartMutation } from "../../../redux/features/cart/cartApi";
+import toast from "react-hot-toast";
 
 const ProductCard = ({ product }) => {
+  const [addToCart, { data, isSuccess }] = useAddToCartMutation();
   const { title, price, variation, size, _id } = product;
   const dispatch = useDispatch();
 
@@ -13,6 +16,17 @@ const ProductCard = ({ product }) => {
     image,
     color,
   });
+
+  // add to Cart Functionality
+  const handelAddTocart = () => {
+    const cartData = {
+      product: _id,
+      quantity: 1,
+      size: size[0].sizeName,
+      color: color,
+    };
+    addToCart(cartData);
+  };
 
   const handelActiveImage = (color) => {
     const selectedColor = variation.find((item) => item.color == color);
@@ -25,6 +39,12 @@ const ProductCard = ({ product }) => {
   const handelSetImage = () => {
     dispatch(setImageAndColor({ image, color }));
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message);
+    }
+  }, [isSuccess, data]);
 
   return (
     <div id="modal-id">
@@ -89,7 +109,10 @@ const ProductCard = ({ product }) => {
                     </div>
                   </div>
                   <div className="flex space-x-2 text-sm font-medium justify-start">
-                    <button className="transition ease-in duration-300 inline-flex items-center text-sm font-medium mb-2 md:mb-0 bg-teal-500 px-5 py-2 hover:shadow-lg tracking-wider text-white rounded-full hover:bg-teal-600 ">
+                    <button
+                      className="transition ease-in duration-300 inline-flex items-center text-sm font-medium mb-2 md:mb-0 bg-teal-500 px-5 py-2 hover:shadow-lg tracking-wider text-white rounded-full hover:bg-teal-600 "
+                      onClick={handelAddTocart}
+                    >
                       <span>Add Cart</span>
                     </button>
                     <Link to={`/product/${_id}`}>

@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 
-nav a.active{
-    color:#008170;
+nav a.active {
+    color: #008170;
+}
+
+html {
+    scroll-behavior: smooth;
 }

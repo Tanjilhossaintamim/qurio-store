@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Navbar,
   Typography,
@@ -7,7 +7,7 @@ import {
   Badge,
   Collapse,
 } from "@material-tailwind/react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import logo from "../../../assets/navlogo.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +17,9 @@ import { useLogoutMutation } from "../../../redux/features/auth/authApi";
 export default function MyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const [logout]=useLogoutMutation()
+  const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -85,9 +86,13 @@ export default function MyNavbar() {
     </ul>
   );
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   const handelLogout = () => {
     dispatch(removeUser());
-    logout({})
+    logout({});
   };
 
   return (

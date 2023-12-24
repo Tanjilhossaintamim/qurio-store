@@ -6,9 +6,13 @@ import MyImage from "../../components/shared/Image/Image";
 import { useSelector } from "react-redux";
 import DetailsSkeleton from "../../components/shared/detailsSkeleton/DetailsSkeleton";
 import { Helmet } from "react-helmet-async";
+import { useAddToCartMutation } from "../../redux/features/cart/cartApi";
+import toast from "react-hot-toast";
 
 const Details = () => {
   const { id } = useParams();
+  const [addToCart, { isSuccess: productAddSuccess, data: productAddInfo }] =
+    useAddToCartMutation();
   const { data, isLoading, isSuccess } = useGetSingleProductsQuery(id);
   const { image, color } = useSelector((state) => state.product);
 
@@ -48,6 +52,17 @@ const Details = () => {
     }
   };
 
+  // add to cart Functionality
+  const handelAddTocart = () => {
+    const cartData = {
+      product: data?.payload?._id,
+      quantity,
+      size: currentSize,
+      color: color,
+    };
+    addToCart(cartData);
+  };
+
   useEffect(() => {
     if (isSuccess) {
       setcurrentImage({
@@ -56,6 +71,12 @@ const Details = () => {
       });
     }
   }, [isSuccess, data]);
+
+  useEffect(() => {
+    if (productAddSuccess) {
+      toast.success(productAddInfo?.message);
+    }
+  }, [productAddSuccess, productAddInfo]);
 
   if (isLoading) {
     return (
@@ -138,7 +159,10 @@ const Details = () => {
             +
           </button>
         </div>
-        <button className="bg-[#379D8A] px-8 py-2 mt-3 w-80 text-white uppercase rounded hover:bg-[#328161] transition-colors">
+        <button
+          onClick={handelAddTocart}
+          className="bg-[#379D8A] px-8 py-2 mt-3 w-80 text-white uppercase rounded hover:bg-[#328161] transition-colors"
+        >
           Add To Cart
         </button>
       </div>
