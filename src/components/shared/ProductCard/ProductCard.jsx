@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { setImageAndColor } from "../../../redux/features/product/productSlice";
 import { useAddToCartMutation } from "../../../redux/features/cart/cartApi";
 import toast from "react-hot-toast";
 
 const ProductCard = ({ product }) => {
   const [addToCart, { data, isSuccess }] = useAddToCartMutation();
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const { title, price, variation, size, _id } = product;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { image, color } = variation[0];
 
@@ -19,6 +21,9 @@ const ProductCard = ({ product }) => {
 
   // add to Cart Functionality
   const handelAddTocart = () => {
+    if (!isLoggedIn) {
+      return navigate("/login");
+    }
     const cartData = {
       product: _id,
       quantity: 1,

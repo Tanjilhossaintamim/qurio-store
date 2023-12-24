@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import classNames from "classnames";
 import { useGetSingleProductsQuery } from "../../redux/features/product/productApi";
 import MyImage from "../../components/shared/Image/Image";
@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 
 const Details = () => {
   const { id } = useParams();
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const [addToCart, { isSuccess: productAddSuccess, data: productAddInfo }] =
     useAddToCartMutation();
   const { data, isLoading, isSuccess } = useGetSingleProductsQuery(id);
@@ -24,7 +25,7 @@ const Details = () => {
     data?.payload?.size[0].sizeName || "xs"
   );
   const [quantity, setQuantity] = useState(1);
-
+  const navigate = useNavigate();
   // handel image and color active
   const handelActiveImage = (color) => {
     const selectedColor = data?.payload?.variation?.find(
@@ -54,6 +55,9 @@ const Details = () => {
 
   // add to cart Functionality
   const handelAddTocart = () => {
+    if (!isLoggedIn) {
+      return navigate("/login");
+    }
     const cartData = {
       product: data?.payload?._id,
       quantity,

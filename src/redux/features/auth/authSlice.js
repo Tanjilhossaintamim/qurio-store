@@ -11,14 +11,14 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
+      state.isLoading = false;
       state.isLoggedIn = true;
       state.user = action.payload;
-      state.isLoading = false;
     },
     removeUser: (state) => {
+      state.isLoading = false;
       state.isLoggedIn = false;
       state.user = {};
-      state.isLoading = false;
     },
   },
 });

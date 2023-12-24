@@ -5,14 +5,14 @@ const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
     singup: builder.mutation({
       query: (data) => ({
-        url: "/api/register",
+        url: "/register",
         method: "POST",
         body: data,
       }),
     }),
     login: builder.mutation({
       query: (data) => ({
-        url: "/api/login",
+        url: "/login",
         method: "POST",
         credentials: "include",
         body: data,
@@ -28,14 +28,14 @@ const authApi = api.injectEndpoints({
     }),
     verify: builder.mutation({
       query: (data) => ({
-        url: "/api/verify",
+        url: "/verify",
         method: "POST",
         body: data,
       }),
     }),
     logout: builder.mutation({
       query: (data) => ({
-        url: "/api/logout",
+        url: "/logout",
         method: "POST",
         credentials: "include",
         body: data,
@@ -43,7 +43,7 @@ const authApi = api.injectEndpoints({
     }),
     checkLogin: builder.mutation({
       query: () => ({
-        url: "/api/verifyLogin",
+        url: "/verifyLogin",
         method: "POST",
         credentials: "include",
       }),

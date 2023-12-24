@@ -4,13 +4,13 @@ const productApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: () => ({
-        url: "/api/products",
+        url: "/products",
         method: "GET",
       }),
     }),
     getSingleProducts: builder.query({
       query: (id) => ({
-        url: `/api/products/${id}`,
+        url: `/products/${id}`,
         method: "GEt",
       }),
     }),

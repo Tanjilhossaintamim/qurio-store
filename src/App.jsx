@@ -7,13 +7,14 @@ import { removeUser, setUser } from "./redux/features/auth/authSlice";
 
 function App() {
   const [checkLogin, data, isError] = useAuthCheck();
+
   const dispatch = useDispatch();
   useEffect(() => {
     checkLogin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if (data?.payload?._id) {
+    if (data?.payload?.email) {
       dispatch(setUser(data?.payload));
     }
     if (isError) {
