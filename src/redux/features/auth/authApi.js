@@ -33,7 +33,27 @@ const authApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    logout: builder.mutation({
+      query: (data) => ({
+        url: "/api/logout",
+        method: "POST",
+        credentials: "include",
+        body: data,
+      }),
+    }),
+    checkLogin: builder.mutation({
+      query: () => ({
+        url: "/api/verifyLogin",
+        method: "POST",
+        credentials: "include",
+      }),
+    }),
   }),
 });
-export const { useSingupMutation, useLoginMutation, useVerifyMutation } =
-  authApi;
+export const {
+  useSingupMutation,
+  useLoginMutation,
+  useVerifyMutation,
+  useLogoutMutation,
+  useCheckLoginMutation,
+} = authApi;

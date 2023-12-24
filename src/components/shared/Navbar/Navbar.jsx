@@ -12,11 +12,13 @@ import { MdOutlineShoppingBag } from "react-icons/md";
 import logo from "../../../assets/navlogo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../../../redux/features/auth/authSlice";
+import { useLogoutMutation } from "../../../redux/features/auth/authApi";
 
 export default function MyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const [logout]=useLogoutMutation()
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -85,6 +87,7 @@ export default function MyNavbar() {
 
   const handelLogout = () => {
     dispatch(removeUser());
+    logout({})
   };
 
   return (

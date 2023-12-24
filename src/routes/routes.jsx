@@ -5,6 +5,7 @@ import Details from "../pages/Details/Details";
 import LogIn from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import VerifyLogin from "../pages/VerifyLogin/VerifyLogin";
+import PublicRoute from "./PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -21,17 +22,30 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <LogIn />,
+        element: (
+          <PublicRoute>
+            {" "}
+            <LogIn />
+          </PublicRoute>
+        ),
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        ),
       },
     ],
   },
   {
     path: "/verify/:token",
-    element: <VerifyLogin />,
+    element: (
+      <PublicRoute>
+        <VerifyLogin />
+      </PublicRoute>
+    ),
   },
 ]);
 
