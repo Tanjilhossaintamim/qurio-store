@@ -6,6 +6,8 @@ import LogIn from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import VerifyLogin from "../pages/VerifyLogin/VerifyLogin";
 import PublicRoute from "./PublicRoute";
+import Cart from "../pages/Cart/Cart";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
           <PublicRoute>
             <Register />
           </PublicRoute>
+        ),
+      },
+      {
+        path: "/cart",
+        element: (
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
         ),
       },
     ],

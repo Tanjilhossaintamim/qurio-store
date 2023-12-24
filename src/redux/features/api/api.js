@@ -5,6 +5,7 @@ const api = createApi({
     baseUrl: "http://localhost:3000",
   }),
   endpoints: () => ({}),
+  tagTypes: ["Carts"],
 });
 
 export default api;

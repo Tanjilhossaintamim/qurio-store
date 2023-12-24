@@ -2,6 +2,14 @@ import api from "../api/api";
 
 const cartApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    allCartItems: builder.query({
+      query: () => ({
+        url: "/api/carts",
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["Carts"],
+    }),
     addToCart: builder.mutation({
       query: (data) => ({
         url: "/api/carts/addToCart",
@@ -9,20 +17,30 @@ const cartApi = api.injectEndpoints({
         credentials: "include",
         body: data,
       }),
+      invalidatesTags: ["Carts"],
     }),
     updateQuantity: builder.mutation({
       query: (data) => ({
-        url: "/api/products",
-        method: "POST",
+        url: "/api/carts/updateQuantity",
+        method: "PATCH",
+        credentials: "include",
         body: data,
       }),
+      invalidatesTags: ["Carts"],
     }),
-    allCartItems: builder.query({
-      query: () => ({
-        url: "/api/products",
-        method: "POST",
+    deleteCartItem: builder.mutation({
+      query: (id) => ({
+        url: `/api/carts/delete/${id}`,
+        method: "DELETE",
+        credentials: "include",
       }),
+      invalidatesTags: ["Carts"],
     }),
   }),
 });
-export const { useAddToCartMutation } = cartApi;
+export const {
+  useAddToCartMutation,
+  useAllCartItemsQuery,
+  useUpdateQuantityMutation,
+  useDeleteCartItemMutation,
+} = cartApi;

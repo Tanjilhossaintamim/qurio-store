@@ -13,8 +13,10 @@ import logo from "../../../assets/navlogo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../../../redux/features/auth/authSlice";
 import { useLogoutMutation } from "../../../redux/features/auth/authApi";
+import { useAllCartItemsQuery } from "../../../redux/features/cart/cartApi";
 
 export default function MyNavbar() {
+  const { data } = useAllCartItemsQuery();
   const [openNav, setOpenNav] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -106,8 +108,8 @@ export default function MyNavbar() {
           <div className="flex items-center  gap-x-1">
             <div className="lg:flex items-center hidden    gap-4">
               {/* //cart */}
-              <Badge content="5">
-                <span>
+              <Badge content={data?.payload?.results?.products?.length || 0}>
+                <span onClick={() => navigate("/cart")}>
                   <MdOutlineShoppingBag className="text-3xl" />
                 </span>
               </Badge>
@@ -174,8 +176,11 @@ export default function MyNavbar() {
           {navList}
           <div className="flex items-center hover:text-teal-500 text-base font-medium text-color-black-1 gap-x-1">
             {/* // cart button */}
-            <Badge content="5">
-              <span>
+            <Badge content={data?.payload?.results?.products?.length || 0}>
+              <span
+                onClick={() => navigate("/cart")}
+                className="cursor-pointer"
+              >
                 <MdOutlineShoppingBag className="text-3xl" />
               </span>
             </Badge>
