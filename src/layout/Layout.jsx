@@ -4,9 +4,11 @@ import { Footer } from "../components/shared/Footer/Footer";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 
+import Spinner from "../components/shared/Spinner/Spinner";
+
 const Layout = () => {
   const { isLoading } = useSelector((state) => state.auth);
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Spinner />;
   return (
     <div>
       <MyNavbar />

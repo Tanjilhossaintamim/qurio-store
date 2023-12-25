@@ -91,7 +91,7 @@ const Details = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto h-screen lg:flex mt-40 justify-between px-4 lg:px-0">
+    <div className="max-w-6xl mx-auto my-20 lg:my-0 h-screen lg:flex mt-40 justify-between px-4 lg:px-0">
       <Helmet>
         <title>Qrio || Details</title>
       </Helmet>

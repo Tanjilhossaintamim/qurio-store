@@ -13,6 +13,8 @@ function App() {
     checkLogin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // when a user will first time login or refresh any page this function will check this token is valid or not
   useEffect(() => {
     if (data?.payload?.email) {
       dispatch(setUser(data?.payload));
