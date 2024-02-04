@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { removeUser, setUser } from "./redux/features/auth/authSlice";
 
 function App() {
+  // this function will check i user login or not
   const [checkLogin, data, isError] = useAuthCheck();
 
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function App() {
 
   // when a user will first time login or refresh any page this function will check this token is valid or not
   useEffect(() => {
-    if (data?.payload?.email) {
+    if (data?.payload?.email) { 
       dispatch(setUser(data?.payload));
     }
     if (isError) {
