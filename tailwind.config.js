@@ -7,6 +7,7 @@ export default withMT({
       colors: {
         "color-nav-bg": "#E8ECEF",
         "color-black-1": "#333333",
+        "color-black-2": "#343333",
       },
     },
   },

@@ -4,6 +4,7 @@
 
 This project is a modern web application that provides user authentication and enables users to add products to their shopping cart. The backend and frontend leverage various technologies and packages to create a seamless and secure user experience.
 
+
 ## Features
 
 ### User Authentication
